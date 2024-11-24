@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-5">
+    <!-- Header -->
+    <h1 class="text-4xl font-bold text-gray-800 mb-5">Task-Tracker</h1>
+
+    <!-- Add Task Form -->
+    <form action="/add" method="POST" class="w-full max-w-md mb-8 flex items-center gap-3">
+        <input 
+            type="text" 
+            name="task" 
+            placeholder="New Task" 
+            required 
+            class="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+        <button 
+            type="submit" 
+            class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition">
+            Add Task
+        </button>
+    </form>
+
+    <!-- Task List -->
+    <ul class="w-full max-w-md bg-white shadow-md rounded-lg p-5 space-y-4">
+        <% if (todos.length === 0) { %>
+            <p class="text-gray-500 text-center">No tasks available. Add a task to get started!</p>
+        <% } %>
+        <% todos.forEach(todo => { %>
+            <li class="flex justify-between items-center p-3 border-b last:border-none">
+                <div>
+                    <p class="text-lg font-medium text-gray-800"><%= todo.task %></p>
+                    <p class="text-sm text-gray-500"><%= todo.status %></p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a 
+                        href="/edit/<%= todo.id %>" 
+                        class="px-3 py-1 bg-yellow-400 text-white font-semibold rounded-lg hover:bg-yellow-500 transition">
+                        Edit
+                    </a>
+                    <a 
+                        href="/delete/<%= todo.id %>" 
+                        onclick="return confirm('Are you sure?')" 
+                        class="px-3 py-1 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                        Delete
+                    </a>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
